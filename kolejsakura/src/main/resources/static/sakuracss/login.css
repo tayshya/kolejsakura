@@ -1,0 +1,64 @@
+body {
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+ul a {
+  font-size: 29px;
+  color: white;
+  text-decoration: none
+}
+
+ul a:hover {
+  text-decoration: none;
+  color: gray;
+}
+
+.label {
+  font-size: 22px;
+  color: white;
+  font-weight: normal;
+  margin-left:50px;
+}
+
+.form-control {
+  background: transparent;
+  border-radius: 0px;
+  border: 0px;
+  border-bottom: 1px solid #f44c89;
+  margin-bottom: 30px;
+  font-size: 22px;
+  color: white;
+  padding: 10px;
+}
+
+input[type="checkbox"] {
+  height: 15px;
+  width: 15px;
+  margin-left: 50px;
+}
+
+small {
+  font-size: 19px;
+  color: black;
+}
+
+.btn-info {
+  background: #f44c89;
+  border: 2px solid #f44c89;
+  border-radius: 0px;
+  width: 150px;
+  margin-top: 20px;
+  margin-left: 50px;
+  font-size: 20px;
+  background: transparent;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+
+.btn-info:hover {
+  background: #f44c89;
+  border: 2px solid #f44c89;
+  text-decoration: none;
+}

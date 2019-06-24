@@ -1,0 +1,114 @@
+
+<div class="jumbotron">
+      <div class="content">
+        <h1>SAKURA COLLEGE</h1>
+        <h5>UNIVERSITY MALAYSIA SARAWAK</h5>
+        <p>Keep yourself updated with every activities and events of Sakura.
+          This is for Sakura residents especially, as well as the UNIMAS citizens, and other people indirectly,
+          to learn more about Sakura alongside of providing alot of useful and important informations.</p>
+        <p>The purpose of this page is to publicize every activities and events of Sakura. You can create and upload the event
+          that will be organized by the Jawatankuasa Perwakilan Kolej Sakura here to keep Sakura Residents updated with all the events. </p>
+        <div class="svg">
+          <a class="button" data-toggle="modal" href="#createEvent" data-backdrop="false" ng-click="viewCategory()">
+            <svg>
+              <rect height="40" width="130" fill="transparent" />
+            </svg>
+            <span>Create Event</span>
+          </a>
+          <!-- The Modal -->
+          <div class="modal fade" id="createEvent" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Create A New Event</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <form name="addFrm">
+                  <div>
+                    <table>
+                      <tr>
+                        <td>Event Category:</td>
+                        <td>
+                          <div class="event_content">
+                            <select name="category" id="category" ng-model="categoryList.selectedOption"
+                            ng-options="option.categoryType for option in categoryList track by option.cID"
+                             class="timeoption">
+                          </select>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Event Title:</td>
+                        <td><input type="text" ng-model="EventTitle"></td>
+                      </tr>
+                      <tr>
+                        <td>Event Description:</td>
+                        <td><input type="text" ng-model="EventDescription"></td>
+                      </tr>
+                      <tr>
+                        <td>Event Participant:</td>
+                        <td><input type="text" name="participant"
+                          ng-model="participants.participant" /><td>
+                            <td><button ng-disabled="addFrm.$invalid"
+                              ng-click="addEventParticipant()">add</button></td>
+                              </tr>
+                        <div>
+                          <tr ng-repeat-start="participant in participants"
+                            ng-if="$first">
+                            <td class="text-left"></td>
+                            <td class="text-left"><span class="fas fa-trash"
+                              ng-click="deleteEventParticipant($index)"></span> <span>{{participant.participantName}}</span></td>
+                            </tr>
+                            <tr ng-repeat-end ng-if="!$first">
+                              <td class="text-left"></td>
+                              <td class="texr-left"><span class="fas fa-trash"
+                                ng-click="deleteEventParticipant($index)"></span> <span>{{participant.participantName}}</span></td>
+                              </tr>
+                        </div>
+
+                    </table>
+                  </div>
+                </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal" data-backdrop="false" ng-click="Create()">Create</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="createModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h2 class="modal-title">Confirmation</h2>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <h4>Confirm to create event</h4>
+						     </div>
+                 <!-- Modal footer -->
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" ng-click="addEvent()">Confirm</button>
+                 </div>
+
+ 					    </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>

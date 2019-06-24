@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<head>
+  <title>Sakura Event</title>
+  <link rel="stylesheet" href="sakuracss/sakuraevent.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+  	crossorigin="anonymous">
+  <script src="sakurascript\lib\angular.js"></script>
+  <script src="sakurascript\lib\sakuraapp.js"></script>
+  <script src="sakurascript\lib\sakuraservice.js"></script>
+  <script src="sakurascript\lib\sakuracontroller.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="http://code.angularjs.org/1.4.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular-route.js"></script>
+
+
+</head>
+<body ng-app="MySakuraEventApp" background="sakuraimages/unimas4.jpg">
+  <div ng-controller="SakuraController">
+  
+  
+  
+   <!--<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" id="theVideo">
+    <video autoplay muted loop id="theVideo">
+      <source src="sakuravideo/Cherry Blossom (Video Background).mp4" type="video/mp4">
+    </video>   -->
+
+    <nav class="navbar navbar-expand-md fixed top navbar-dark">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <p class="navbar-brand">SAKURA WARRIORS</p>
+          <img src="sakuraimages\sakuralogo.jpg" alt="Logo" style="width:40px;">
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+            
+        </div>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+          <ul class="navbar-nav">
+          <!-- 	<li class="nav-item">
+              <a class="nav-link" href="#/info">INFO</a>
+            </li> -->	
+            <li class="nav-item">
+              <a class="nav-link" href="#">ABOUT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="viewEvent.html">EVENT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="event.html">CONTACTS</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">ACCOUNT</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="login.html">SIGN UP</a>
+                <a class="dropdown-item" href="#">LOGIN</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+      <div class="jumbotron bg-transparent"> 
+      <div class="content">
+       <h1>SAKURA COLLEGE</h1>
+        <h5>UNIVERSITY MALAYSIA SARAWAK</h5>
+        <p>Keep yourself updated with every activities and events of Sakura.
+          This is for Sakura residents especially, as well as the UNIMAS citizens, and other people indirectly,
+          to learn more about Sakura alongside of providing alot of useful and important informations.</p>
+        <p>The purpose of this page is to publicize every activities and events of Sakura. You can create and upload the event
+          that will be organized by the Jawatankuasa Perwakilan Kolej Sakura here to keep Sakura Residents updated with all the events. </p>
+        <div class="svg">
+          <a class="button" data-toggle="modal" href="#createEvent" data-backdrop="false" ng-click="viewCategory()">
+            <svg>
+              <rect height="40" width="130" fill="transparent" />
+            </svg>
+            <span>Create Event</span>
+          </a>
+          <!-- The Modal -->
+          <div class="modal fade" id="createEvent" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Create A New Event</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <form name="addFrm">
+                  <div>
+                    <table>
+                      <tr>
+                        <td>Event Category:</td>
+                        <td>
+                          <div class="event_content">
+                            <select name="category" id="category" ng-model="categoryList.selectedOption"
+                            ng-options="option.categoryType for option in categoryList track by option.cID"
+                             class="timeoption">
+                          </select>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Event Title:</td>
+                        <td><input type="text" ng-model="EventTitle"></td>
+                      </tr>
+                      <tr>
+                        <td>Event Description:</td>
+                        <td><input type="text" ng-model="EventDescription"></td>
+                      </tr>
+                      <tr>
+                        <td>Event Participant:</td>
+                        <td><input type="text" name="participant"
+                          ng-model="participants.participant" /><td>
+                            <td><button ng-disabled="addFrm.$invalid"
+                              ng-click="addEventParticipant()">add</button></td>
+                              </tr>
+                        <div>
+                          <tr ng-repeat-start="participant in participants"
+                            ng-if="$first">
+                            <td class="text-left"></td>
+                            <td class="text-left"><span class="fas fa-trash"
+                              ng-click="deleteEventParticipant($index)"></span> <span>{{participant.participantName}}</span></td>
+                            </tr>
+                            <tr ng-repeat-end ng-if="!$first">
+                              <td class="text-left"></td>
+                              <td class="texr-left"><span class="fas fa-trash"
+                                ng-click="deleteEventParticipant($index)"></span> <span>{{participant.participantName}}</span></td>
+                              </tr>
+                        </div>
+
+                    </table>
+                  </div>
+                </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal" data-backdrop="false" ng-click="Create()">Create</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="createModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h2 class="modal-title">Confirmation</h2>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <h4>Confirm to create event</h4>
+						     </div>
+                 <!-- Modal footer -->
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" ng-click="addEvent()">Confirm</button>
+                 </div>
+
+ 					    </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>  
+    </div>
+ </div>
+    
+    
+    
+   </div>
+ 
+</body>
+
+</html>
+  
+ 
+  

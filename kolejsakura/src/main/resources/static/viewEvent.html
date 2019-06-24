@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<head>
+  <title>Sakura Event</title>
+  <link rel="stylesheet" href="sakuracss/sakuraevent.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+  	crossorigin="anonymous">
+  <script src="sakurascript\lib\angular.js"></script>
+  <script src="sakurascript\lib\sakuraapp.js"></script>
+  <script src="sakurascript\lib\sakuraservice.js"></script>
+  <script src="sakurascript\lib\sakuracontroller.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="http://code.angularjs.org/1.4.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular-route.js"></script>
+
+
+</head>
+<body ng-app="MySakuraEventApp">
+  <div ng-controller="SakuraController">
+
+
+<nav class="navbar navbar-light justify-content-center"
+				style="background-color: rgba(0, 0, 0, 0.3); box-shadow: 0 0 10px rgba(0,128, 128, 0.3);">
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<a ng-repeat-start="category in categoryList" ng-if="$first"
+						ng-init="selectCategory(category);"
+						ng-click="selectCategory(category)"
+						class="nav-item nav-link active" id="nav-{{category.cID}}-tab"
+						data-toggle="tab" href="#nav-{{category.cID}}" role="tab"
+						aria-controls="nav-{{category.cID}}" aria-selected="true">{{category.categoryType}}</a>
+					<a  ng-repeat-end ng-if="!$first"
+						ng-click="selectCategory(category);" class="nav-item nav-link"
+						id="nav-{{category.cID}}-tab" data-toggle="tab"
+						href="#nav-{{category.cID}}" role="tab"
+						aria-controls="nav-{{category.cID}}" aria-selected="false">{{category.categoryType}}</a>
+				</div>
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
+				<div ng-repeat-start="category in categoryList" ng-if="$first"
+					class="tab-pane fade show active" id="nav-{{category.cID}}"
+					role="tabpanel" aria-labelledby="nav-{{category.cID}}-tab">
+					<div class="row">
+						<div class="col-md-3" style="margin-top: 12px;"
+							ng-repeat="event in category.events">
+							<div
+								style="border: 10px solid #333; background-color: rgba(255, 255, 255, 0.3); border-radius: 10px; padding: 16px; height: 200px; box-shadow: 0 0 30px rgba(0, 128, 128, 0.6);"
+								align="center">
+								<!--<span class="fa fa-close" data-toggle="modal"
+									data-target="#confirmDeleteModel"
+									ng-click="pushEID(event.eID)"></span>  -->
+								<div>
+									<div class="event_content">{{event.eventName}}</div>
+									<br>
+									<p>
+										<button type="button"  class="btn btn-info" data-toggle="modal"
+											ng-click="selectEvent(event)"
+											data-target="#readEventModal">Details</button>
+
+									</p>
+									<p>
+										<button type="button" class="btn btn-danger" data-toggle="modal"
+											ng-click="pushEID(event.eID)"
+											data-target="#deleteModal">Delete</button>
+
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div ng-repeat-end ng-if="!$first" class="tab-pane fade"
+					id="nav-{{category.cID}}" role="tabpanel"
+					aria-labelledby="nav-{{category.cID}}-tab">
+					<div class="row">
+						<div class="col-md-3" style="margin-top: 12px;"
+							ng-repeat="event in category.events">
+							<div
+								style="border: 10px solid #333; background-color: rgba(255, 255, 255, 0.3); border-radius: 10px; padding: 16px; height: 200px; box-shadow: 0 0 10px rgba(0, 128, 128, 0.6);"
+								align="center">
+								<!--<span class="fa fa-close" data-toggle="modal"
+									data-target="#confirmDeleteModel"
+									ng-click="pushEID(event.eID)"></span>  -->
+								<div>
+									<div class="event_content">{{event.eventName}}</div>
+									<br>
+									<p>
+										<button type="button"  class="btn btn-info" data-toggle="modal"
+											ng-click="selectEvent(event)"
+											data-target="#readEventModal">Details</button>
+
+									</p>
+									<p>
+										<button type="button" class="btn btn-danger" data-toggle="modal"
+											ng-click="pushEID(event.eID)"
+											data-target="#deleteModal">Delete</button>
+										
+
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="readEventModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+				
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Event Details</h5>
+					</div>
+					<div class="modal-body">
+								<div>
+									<table class="table-fill">
+										<thead>
+											<tr id="t-row">
+												<th id="t-head" class="text-left">Event</th>
+												<th id="t-head" class="text-left">Details of Event</th>
+											</tr>
+										</thead>
+										<tbody class="table-hover">
+											<tr id="t-row">
+												<td id="t-col" class="text-left">Event Title</td>
+												<td id="t-col" class="text-left">{{selectedEvent.eventName}}</td>
+											</tr>
+											<tr id="t-row">
+												<td id="t-col" class="text-left">Event Description</td>
+												<td id="t-col" class="text-left">{{selectedEvent.eventDescription}}</td>
+											</tr>
+											<div>
+												<tr id="t-row"
+													ng-repeat-start="participant in selectedEvent.participants"
+													ng-if="$first">
+													<td id="t-col" class="text-left">Event Participant</td>
+													<td id="t-col" class="text-left">{{participant.participantName}}</td>
+												</tr>
+												<tr id="t-row" ng-repeat-end ng-if="!$first">
+													<td id="t-col" class="text-left"></td>
+													<td id="t-col" class="text-left">{{participant.participantName}}</td>
+												</tr>  
+											</div>
+											
+										</tbody>
+									</table>
+								</div>
+								<br>
+					</div>
+					<div class="modal-footer">
+							<button type=" button" class="btn btn-warning btn-lg"
+								data-toggle="modal" data-target="#updateEventModal"
+								ng-click="Edit()">Edit</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
+				</div>
+				</div>
+			</div>
+			
+			<div id="updateEventModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Event Details</h4>
+						</div>
+						<div class="modal-body">
+							<form name="updateFrm">
+								<div>
+									<table>
+										<tr>
+											<td>Event Title:</td>
+											<td><input type="text"
+												ng-model="selectedEvent.eventName"></td>
+										</tr>
+										<tr>
+											<td>Event Description:</td>
+											<td><input type="text"
+												ng-model="selectedEvent.eventDescription"></td>
+										</tr>
+										<tr>
+											<td>Event Participant:</td>
+											<td><input type="text" name="participantName"
+												ng-model="participantName" /></td>
+											<td><button ng-disabled="updateFrm.$invalid"
+													ng-click="addParticipant()">add</button></td>
+										</tr>
+										<div>
+											<tr
+												ng-repeat-start="participant in selectedEvent.participants"
+												ng-if="$first">
+												<td class="text-left"></td>
+												<td class="text-left"><span class="fas fa-trash"
+													ng-click="keepParticipant(participant);deleteParticipant($index)"></span>
+													<span>{{participant.participantName}}</span></td>
+											</tr>
+											<tr ng-repeat-end ng-if="!$first">
+												<td class="text-left"></td>
+												<td class="text-left"><span class="fas fa-trash"
+													ng-click="keepParticipant(participant); deleteParticipant($index)"></span>
+													<span>{{participant.participantName}}</span></td>
+											</tr>
+										</div>
+										
+									</table>
+								</div>
+								<br>
+						</div>
+						<div class="modal-footer">
+							<button type=" button" class="btn btn-info btn-lg"
+								data-toggle="modal" data-target="#updateModal"
+								ng-click="Update()">Update</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">Confirmation for Update</h2>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <h4>Confirm to update event</h4>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+           <button type="button" class="btn btn-primary" ng-click="updateEvent(selectedparticipants)">Confirm</button>
+           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         </div>
+
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="modal fade" id="deleteModal" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h2 class="modal-title">Confirmation for Delete</h2>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <h4>Confirm to delete event</h4>
+           </div>
+           <!-- Modal footer -->
+           <div class="modal-footer">
+             <button type="button" class="btn btn-primary" ng-click="deleteEvent(id)">Confirm</button>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+           </div>
+
+         </div>
+        </div>
+      </div>
+
+      
+       </div>  
+</body>
+
+</html>

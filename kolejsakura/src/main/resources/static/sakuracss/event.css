@@ -1,0 +1,17 @@
+body {
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: url("sakuraimages/unimas3.jpg");
+}
+h4{
+  color: black;
+}
+td{
+  color: black;
+}
+h2{
+  color: red;
+}
+h3{
+  color: black;
+}
